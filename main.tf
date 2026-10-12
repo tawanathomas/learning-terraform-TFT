@@ -3,7 +3,8 @@ data "aws_ami" "app_ami" {
 
   filter {
     name   = "name"
-    values = ["bitnami-tomcat-*-x86_64-hvm-ebs-nami"]
+    # Removed the backslash and updated the pattern to match newer gp3 storage formats
+    values = ["bitnami-tomcat-*-x86_64-hvm-ebs-gp3"]
   }
 
   filter {

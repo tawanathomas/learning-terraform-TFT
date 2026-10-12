@@ -1,10 +1,9 @@
-data "aws_ami" "app_ami" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    # Removed the backslash and updated the pattern to match newer gp3 storage formats
-    values = ["bitnami-tomcat-*-x86_64-hvm-ebs-gp3"]
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
   }
 
   filter {
@@ -12,14 +11,14 @@ data "aws_ami" "app_ami" {
     values = ["hvm"]
   }
 
-  owners = ["979382823631"] # Bitnami
+  owners = ["099720109477"] # Canonical (Official Ubuntu Publisher)
 }
 
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.app_ami.id
-  instance_type = "t3.nano"
+resource "aws_instance" "blog" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
 
   tags = {
-    Name = "HelloWorld"
+    Name = "TomcatWebServer"
   }
 }
